@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <style>
+        body {font-family: Arial, Helvetica, sans-serif;margin: 20px;}
+        td {padding: 10px;}
+        .bullish {background: green; color: white;}
+        .bearish {background: red; color: white;}
+       </style>
+    </head>
+<body>
+    <h1>Stock Screener</h1>
+    <form >
+        <select name="Pattern" id="">
+            {% for pattern in patterns %}
+            <option value="{{pattern}}", {% if pattern==current_pattern %} selected = "selected" {% endif %} >{{patterns[pattern]}}</option>
+            {% endfor %}
+        </select> 
+        <input type="submit" value="Scan">        
+    </form>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Signal</th>
+        </tr>
+            {% for stock in stocks %}
+                {% if stocks[stock][current_pattern] %}
+            <tr>
+                <td><a href="https://in.tradingview.com/chart/?symbol=NSE%3A{{stock.split('.')[0]}}" target="_blank">{{ stocks[stock]['Symbol'] }}</a></td>
+                <td class="{{ stocks[stock][current_pattern] }}">{{ stocks[stock][current_pattern] }}</td>  
+            </tr>   
+                {% endif %}
+            {% endfor %}
+            </tr>
+            
+
+    </table>
+
+</body>
+</html> 
